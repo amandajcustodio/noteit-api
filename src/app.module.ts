@@ -11,11 +11,17 @@ import { UserModule } from './modules/user/user.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'sqlite',
-      database: 'test.db',
+      type: 'postgres',
+      url: enviroment.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: true,
       logging: enviroment.DATABASE_LOGGING === 'true',
+      ssl: true,
+      extra: {
+        ssl: {
+          rejectUnauthorized: false,
+        }
+      },
     }),
     UserModule,
     AuthModule,
